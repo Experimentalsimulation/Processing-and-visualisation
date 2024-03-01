@@ -1,0 +1,3 @@
+  Run_nr	   Alpha	    Beta	      CL	      CD	    Cyaw	 Cm_p_qc	      Ct	      Cn	   Cside	 Cm_roll	Cm_pitch	  Cm_yaw	       V	      Re	       M
+       /	 degrees	 degrees	       /	       /	       /	       /	       /	       /	       /	       /	       /	       /	     m/s	       /	       /
+      19	   0.005	   0.000	  0.3990	0.058653	 0.00241	-0.41434	0.058620	  0.3990	0.002410	-0.00264	-0.50977	-0.00001	   40.21	3.435E+5	   0.118	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        	        
