@@ -1,3 +1,21 @@
+%% Initialization
+% clear workspace, figures, command window
+clear 
+close all
+clc
+
+%% Inputs
+
+% define root path on disk where data is stored
+diskPath = './DATA';
+
+% get indices balance and pressure data files
+[idxB,idxP] = SUP_getIdx;
+
+filename = 'BAL/raw_propon_zero.txt';
+fid  = fopen(filename);
+
+
 % Given data points
 x = [1, 2, 3];
 y = [1, 3, 2];
