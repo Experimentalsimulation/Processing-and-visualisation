@@ -24,21 +24,19 @@ diskPath = './DATA';
 % structure and these must start with a letter, so you will need to replace
 % the first character with a letter. For the + and - signs this has already
 % been implemented.
-fn_BAL = {'BAL/raw_propoff_de0.txt','BAL/raw_propoff_de10.txt','BAL/raw_propoff_de20.txt','BAL/raw_propoff_de20.txt','BAL/raw_propoff_de25.txt','BAL/raw_propoff_demin10.txt', 'BAL/raw_propon_de0.txt', 'BAL/raw_propon_de10.txt','BAL/raw_propon_de20.txt','BAL/raw_propn_de25.txt','BAL/raw_propon_demin10.txt' };
+fn_BAL = {'BAL/raw_propoff_de0.txt','BAL/raw_propoff_de10.txt','BAL/raw_propoff_de20.txt','BAL/raw_propoff_de25.txt','BAL/raw_propoff_demin10.txt', 'BAL/raw_propon_de0.txt', 'BAL/raw_propon_de10.txt','BAL/raw_propon_de20.txt','BAL/raw_propn_de25.txt','BAL/raw_propon_demin10.txt' };
 
 % filename(s) of the zero-measurement (tare) data files. Define an entry
 % per raw data files. In case multiple zero-measurements are available for
 % a datapoint, then add a structure with the filenames of the zero 
 % measurements at the index of that datapoint.
-fn0 = {'BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt',
-    'BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt'}; 
+fn0 = {'BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt','BAL/raw_propon_zero.txt'}; 
 
 
 
 % filenames of the pressure data files (same comments apply as for balance 
 % data files)
-fn_PRS = {'PRESSURE/raw_propoff_de0.txt','PRESSURE/raw_propoff_de10.txt','PRESSURE/raw_propoff_de20.txt','PRESSURE/raw_propoff_de25.txt','PRESSURE/raw_propoff_demin10.txt',
-    'PRESSURE/raw_propon_de0.txt','PRESSURE/raw_propon_de10.txt','PRESSURE/raw_propon_de20.txt','PRESSURE/raw_propon_de25.txt','PRESSURE/raw_propon_demin10.txt'};
+fn_PRS = {'PRESSURE/raw_propoff_de0.txt','PRESSURE/raw_propoff_de10.txt','PRESSURE/raw_propoff_de20.txt','PRESSURE/raw_propoff_de25.txt','PRESSURE/raw_propoff_demin10.txt','PRESSURE/raw_propon_de0.txt','PRESSURE/raw_propon_de10.txt','PRESSURE/raw_propon_de20.txt','PRESSURE/raw_propon_de25.txt','PRESSURE/raw_propon_demin10.txt'};
 
 
 % wing geometry
