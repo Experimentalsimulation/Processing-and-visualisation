@@ -70,9 +70,21 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 %% Write your code here to apply the corrections and visualize the data
 
-% example of how to access balance data (adapt the names of the fields of
-% the structure to your data)
+
+%% Zero Corrections
+
 figure
-plot(BAL.windOn.proponzerodef.AoA,BAL.windOn.proponzerodef.CL,'*b')
+plot(BAL.windOn.propon_de0.AoA, BAL.windOn.propon_de0.CL, '-*b'); % Plot the first dataset with blue lines and markers
+hold on; % Keep the plot and add subsequent plots to it
+plot(BAL.windOn.propon_de10.AoA, BAL.windOn.propon_de10.CL, '-*r'); % Plot the second dataset with red lines and markers
+plot(BAL.windOn.propon_de20.AoA, BAL.windOn.propon_de20.CL, '-*g'); % Plot the third dataset with green lines and markers
+hold off; % Release the plot for new figures
+
+% Optionally, add labels and a legend
+xlabel('Angle of Attack (AoA)');
+ylabel('Coefficient of Lift (CL)');
+legend('de=0', 'de=10', 'de=20', 'Location', 'Best');
+title('RAW Lift Coefficient vs. Angle of Attack for Different Elevator Deflections');
+
 
 
