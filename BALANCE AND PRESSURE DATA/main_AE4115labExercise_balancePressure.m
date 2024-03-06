@@ -24,17 +24,17 @@ diskPath = './DATA';
 % structure and these must start with a letter, so you will need to replace
 % the first character with a letter. For the + and - signs this has already
 % been implemented.
-fn_BAL = {'BAL/raw_proponzerodef.txt'};
+fn_BAL = {'BAL/raw_propoff_de0.txt'};
 
 % filename(s) of the zero-measurement (tare) data files. Define an entry
 % per raw data files. In case multiple zero-measurements are available for
 % a datapoint, then add a structure with the filenames of the zero 
 % measurements at the index of that datapoint.
-fn0 = {'BAL/zer_ 20220216-085611.txt'}; 
+fn0 = {'BAL/zer_ 20240222-084928.txt'}; 
    
 % filenames of the pressure data files (same comments apply as for balance 
 % data files)
-fn_PRS = {'PRESSURE/raw_propon_zerodef.txt'};
+fn_PRS = {'PRESSURE/raw_propoff_de0.txt'};
    
 % wing geometry
 b     = 1.4*cosd(4); % span [m]
