@@ -38,8 +38,14 @@ fn0 = {'BAL/raw_propoff_zero.txt','BAL/raw_propoff_zero.txt','BAL/raw_propoff_ze
 % filenames of the pressure data files (same comments apply as for balance 
 % data files)
 fn_PRS = {'PRESSURE/raw_propoff_de0.txt','PRESSURE/raw_propoff_de10.txt','PRESSURE/raw_propoff_de20.txt','PRESSURE/raw_propoff_de25.txt','PRESSURE/raw_propoff_demin10.txt',
-    'PRESSURE/raw_propon_de0.txt','PRESSURE/raw_propon_de10.txt','PRESSURE/raw_propon_de20.txt','PRESSURE/raw_propon_de25.txt','PRESSURE/raw_propon_demin10.txt'};
+    'PRESSURE/raw_propon_de0.txt','PRESSURE/raw_propon_de10.txt','PRESSURE/raw_propon_de20.txt'};
 
+
+fn_PRS = {'PRESSURE/raw_propon_de0.txt'};
+fn_PRS = {'PRESSURE/raw_propon_de10.txt'};
+fn_PRS = {'PRESSURE/raw_propon_de20.txt'};
+fn_PRS = {'PRESSURE/raw_propon_de25.txt'};
+fn_PRS = {'PRESSURE/raw_propon_demin10.txt'};
 
 % wing geometry
 b     = 1.4*cosd(4); % span [m]
