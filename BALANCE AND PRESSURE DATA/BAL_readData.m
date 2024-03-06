@@ -35,9 +35,9 @@
 % =========================================================================
 function DATA = BAL_readData(fn,idxB)
 
-% %% Print status update
-% display(['Loading balance data: ',fn])
-% data.fn = fn
+%% Print status update
+display(['Loading balance data: ',fn])
+data.fn = fn
 
 %% Load Data
 % raw data
