@@ -125,7 +125,7 @@ DATA.dPtQ  = read_data(:,idxB.dPtQ);
 % DATA.CYaw = read_data(:,idxB.CYaw);
 % DATA.CMp25c = read_data(:,idxB.CMp25c);
 
-%DATA.Hour=
+% DATA.Hour=
 % if ~isempty(data.unc)
 %     data.unc(idxOutlier,:) = [];
 % end

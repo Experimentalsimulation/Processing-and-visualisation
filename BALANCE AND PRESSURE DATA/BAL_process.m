@@ -123,7 +123,7 @@ for i=1:length(fnBAL) % loop over the files that are to be loaded
         
     % compute calibrated balance forces and moments
     BAL.windOn.(BAL.config{i}) = BAL_forces(BAL.windOn.(BAL.config{i}),BAL.windOff.(BAL.config{i}),idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,modelType,modelPos,testSec);    
-    
+   
 end % end for loop over filenames
 
 end % end of function BAL_process

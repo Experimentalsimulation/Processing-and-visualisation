@@ -132,7 +132,7 @@ elseif strcmpi(modelType,'halfwing') % for this case, only the case of angle-of-
     
     % moments
     CMr = CM(:,1)        + XmRefB(3)*CF(:,2)*(c/b) - XmRefB(2)*CF(:,3)*(c/b); % rolling moment [Nm]
-    CMp = -CM(:,3)*(c/b) - XmRefB(2)*CF(:,1)       + XmRefB(1)*CF(:,2);       % pitching moment [Nm]
+    CMp =  -CM(:,3)*(c/b) - XmRefB(2)*CF(:,1)       + XmRefB(1)*CF(:,2);       % pitching moment [Nm]
     CMy = CM(:,2)*(c/b)  + XmRefB(1)*CF(:,3)*(c/b) - XmRefB(3)*CF(:,1)*(c/b); % yawing moment [Nm] 
 
     % account for model orientation (upper surface pointing down or up in
