@@ -1,0 +1,35 @@
+Plot wishlist:
+
+Balance:
+
+
+- Cm - alpha
+- De - Cm
+- De - Cl
+- De - Cd
+
+Find trimmed conditions for all RPS settings
+
+- Cl-alpha in trimmed
+-Cl - Cd in trimmed
+
+
+Secondary goals:
+
+- Cm - RPS
+
+
+Noise:
+
+Check wind tunnel noise data with no model, and noise mic, see if these can help to get better data
+~substract noise level wind on - winf off
+
+Overall noise levels vs RPS
+Overall noise level vs attitude + De
+
+Spectral density analysis at TBD case
+
+Difference between noise at nose vs back of fuselage
+
+
+

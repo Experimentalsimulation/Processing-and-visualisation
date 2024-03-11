@@ -6,9 +6,9 @@ clc
 % path to folder containing the measurement data
 fnFolder = './DATA'
 
-fn = {'PcoE0.txt',...
-      'PcoE0.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
-  
+% fn = {'propon_de0.txt','propon_demin10.txt','propon_de10.txt','propon_de20.txt','propon_de25.txt','propoff_de0.txt','propoff_demin10.txt','propoff_de10.txt','propoff_de20.txt','propoff_de25.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
+fn = {'propoff_de0.txt','propon_de0.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
+ 
 % settings for spectral analysis (pwelch function)
 nB       = 25;      % number of bins - can be modified to change frequency resolution of spectra
 nOverlap = 0;       % number of samples for overlap
@@ -69,8 +69,8 @@ end % end while loop over files
 figure('Name','Spectra')
 for i=1:7
     subplot(2,4,i), box on, hold on
-    plot(MIC{1}.f{1}/opp{1}.RPS_M1(1),MIC{1}.SPL{1}(:,i),'b')
-    plot(MIC{1}.f{2}/opp{1}.RPS_M1(2),MIC{1}.SPL{2}(:,i),'r')
+    % plot(MIC{1}.f{6},MIC{1}.SPL{6}(:,i),'b')
+    plot(MIC{2}.f{2},MIC{2}.SPL{2}(:,i)-MIC{1}.SPL{6}(:,i),'r')
     xlim([0 13])
     xlabel('Frequency f/RPS [-]')
     ylabel('SPL [dB]')
