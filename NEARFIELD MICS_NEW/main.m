@@ -6,8 +6,7 @@ clc
 % path to folder containing the measurement data
 fnFolder = './DATA'
 
-fn = {'PcoE0.txt',...
-      'PcoE0.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
+fn = {'propon_de0.txt','propon_de10.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
   
 % settings for spectral analysis (pwelch function)
 nB       = 25;      % number of bins - can be modified to change frequency resolution of spectra
@@ -28,8 +27,8 @@ for i=1:length(fn)
     AVGpath    = [fnFolder,'\',fn{i}];
     AVGdata{i} = load(AVGpath);
     
-    opp{i}.DPN    = AVGdata{i}(:,1);
-    opp{i}.vInf   = AVGdata{i}(:,7); % freestream velocity [m/s]
+    opp{i}.DPN    = AVGdata{i}(:,1);   
+    opp{i}.vInf   = AVGdata{i}(:,7);   % freestream velocity [m/s]
     opp{i}.AoA    = AVGdata{i}(:,13);  % angle of attack [deg]
     opp{i}.AoS    = AVGdata{i}(:,14);  % angle of sideslip [deg]
     opp{i}.RPS_M1 = AVGdata{i}(:,15);  % RPS motor 1 [Hz]

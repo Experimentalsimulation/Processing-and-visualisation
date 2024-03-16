@@ -241,6 +241,7 @@ end
 
 BAL0.intp = [B1_0,B2_0,B3_0,B4_0,B5_0,B6_0];
 
+display(BAL0.intp)
 % subtract zero measurement data from the measured data
 BAL.B16zeroed = BAL.B-BAL0.intp;
 
