@@ -70,7 +70,7 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 %% Write your code here to apply the corrections and visualize the data
 % TODO dcm_da_tail() % compute dcm/da_tail 
-blockage(); % applying blockage corrections Maskells method not fully implemented
+blockage(); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
 % Substract model off balance data
