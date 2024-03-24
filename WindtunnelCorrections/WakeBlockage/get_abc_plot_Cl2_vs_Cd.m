@@ -8,7 +8,12 @@ function coefficients = get_abc_plot_Cl2_vs_Cd(cl_squared_values, cd_values)
     coefficients = polyfit(cl_squared_values, cd_values, degree);
 
     % Generate x values for the polynomial line
-    x_values = linspace(min(cl_squared_values), max(cl_squared_values), 100);
+        
+    minimum = min(cl_squared_values);
+    maximum = max(cl_squared_values);
+    disp(maximum)
+    disp(minimum)
+    x_values = linspace(minimum, maximum, 100);
 
     % Calculate corresponding y values using the polynomial function
     y_values = polyval(coefficients, x_values);

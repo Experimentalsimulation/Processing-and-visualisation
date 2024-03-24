@@ -82,7 +82,7 @@ blockage(BAL); % applying blockage corrections Maskells method not fully  implem
 
 % Substract model off balance data
 
-modelOffData = readModelOffData('.\DATA\modeloffdata.txt');
+modelOffData = readModelOffData('BALANCE AND PRESSURE DATA\DATA\modeloffdata.txt');
 %disp(modelOffData);
 correctedBAL = correctBALData(BAL, modelOffData) 
 BAL = correctedBAL
