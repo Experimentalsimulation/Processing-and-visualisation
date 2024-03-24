@@ -4,6 +4,7 @@ function [cl_squared_values, cd_values] = get_Cl2_and_Cd(filename, v_interested)
     cd_values = [];
     
     % Open the file
+    disp(filename)
     fid = fopen(filename, 'r');
     
     % Read the first line to get column names

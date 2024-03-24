@@ -1,7 +1,7 @@
 function filename = determine_filename(de, PropOn, WindOn)
     % Returns the name of the filename based on de, PropOn, and WindOn
     
-    filename = 'C:/Users/PC/Documents/AA TU Delft/MSc AE jaar 1/Q2&3 Experimental Simulations/Group04/BAL/unc';
+    filename = './Group04_dataoriginal/BAL/unc';
     
     % Add propson or propsoff to filename string
     if PropOn == true

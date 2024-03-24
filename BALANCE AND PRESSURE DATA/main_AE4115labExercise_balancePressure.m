@@ -8,10 +8,17 @@ clear
 close all
 clc
 
+% As we have files in multiple paths, paths shoukld be added here
+currentfolder = pwd;
+mainfolder =  fullfile(currentfolder, '..', 'scripts');
+path = genpath(mainfolder);
+addpath(mainfolder);
+
+
 %% Inputs
 
 % define root path on disk where data is stored
-diskPath = './DATA';
+diskPath = 'BALANCE AND PRESSURE DATA/DATA';
 
 % get indices balance and pressure data files
 [idxB,idxP] = SUP_getIdx;
@@ -70,7 +77,7 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 %% Write your code here to apply the corrections and visualize the data
 % TODO dcm_da_tail() % compute dcm/da_tail 
-blockage(); % applying blockage corrections Maskells method not fully  implemented
+blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
 % Substract model off balance data
