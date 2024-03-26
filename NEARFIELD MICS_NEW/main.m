@@ -7,11 +7,12 @@ clc
 fnFolder = './DATA'
 
 
-=======
 % fn = {'propon_de0.txt','propon_demin10.txt','propon_de10.txt','propon_de20.txt','propon_de25.txt','propoff_de0.txt','propoff_demin10.txt','propoff_de10.txt','propoff_de20.txt','propoff_de25.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
 fn = {'propoff_de0.txt','propon_de0.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
 
->>>>>>> f02290643ff9b0341d498c192b115fffcf27d0f8
+prop_track = [0,1];
+de_track = [0,0];
+
 % settings for spectral analysis (pwelch function)
 nB       = 25;      % number of bins - can be modified to change frequency resolution of spectra
 nOverlap = 0;       % number of samples for overlap
@@ -68,6 +69,110 @@ for i=1:length(fn)
     end
     
 end % end while loop over files
+
+
+%OASPL and corrections:
+
+OASPL = {};
+n = 0;
+
+for i= 1:length(fn)
+
+    MIC_fn = MIC{i};
+
+    prop = prop_track(i);
+    de = de_track(i);
+
+    for j = 1:length(MIC_fn.f)
+
+        n = n+1;
+
+        fieldNames = fieldnames(MIC_fn);
+
+        for k = 1:length(fieldNames)
+            MIC_track(n).MIC.(fieldNames{k}) = MIC_fn.(fieldNames{k}){j};
+        end
+
+
+        MIC_track(n).de = de;
+        MIC_track(n).prop = prop;
+    
+
+        
+        V_inf = opp{i}.vInf(j);
+        alpha = opp{i}.AoA(j);
+
+        if isinf(opp{i}.J_M1(j))
+            J = 0;
+        else
+            J = mean([opp{i}.J_M1(j),opp{i}.J_M2(j)]);
+        end
+
+        MIC_track(n).V_inf = round(V_inf, 0);
+        MIC_track(n).J = round(J, 3);
+        MIC_track(n).alpha = round(alpha, 0);
+        
+    end
+
+
+end
+
+
+
+
+%Sort the datapoints in pahabetical-like order
+
+% fieldNames = fieldnames(MIC_track);
+fieldNames = {'alpha','J','de','V_inf','prop'};
+
+for i= 1:length(fieldNames)
+    [~, idx] = sort([MIC_track.(fieldNames{i})]); % Sort based on 'prop' field
+    MIC_track = MIC_track(idx);
+end
+
+
+%Splits prop off and prop on points into two different structs
+a = 1;
+b = 1;
+for i = 1:length(MIC_track)
+    if MIC_track(i).prop == 0
+        MIC_track_propoff(a) = MIC_track(i);
+        a = a +1;
+    else
+        MIC_track_propon(b) = MIC_track(i);
+        b = b+1;
+    end
+end
+
+
+%For every prop on measurement, assigns the relevant prop off measurement
+%for correction
+correction_index_track = [];
+for i = 1:length(MIC_track_propon)
+    for j = 1: length(MIC_track_propoff)
+        if MIC_track_propon(i).de == MIC_track_propoff(j).de && MIC_track_propon(i).V_inf == MIC_track_propoff(j).V_inf && MIC_track_propon(i).alpha == MIC_track_propoff(j).alpha
+            correction_index_track(i) = j;
+            break
+        end
+    end
+
+end
+
+%Apply correctoni to propon measurements
+for i = 1:length(MIC_track_propon)
+    prms_on = Get_prms(MIC_track_propon(i).MIC);
+    prms_off = Get_prms(MIC_track_propoff(correction_index_track(i)).MIC);
+
+    prms_corrected = Get_prms_corrected(prms_on, prms_off, MIC_track_propon(i).V_inf);
+
+    OASPL = Get_OASPL(prms_corrected);
+
+    MIC_track_propon(i).prms = prms_on;
+    MIC_track_propon(i).prms_corrected = prms_corrected;
+    MIC_track_propon(i).OASPL = OASPL;
+
+end
+
 
 figure('Name','Spectra')
 for i=1:7
