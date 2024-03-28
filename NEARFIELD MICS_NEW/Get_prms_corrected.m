@@ -11,6 +11,6 @@ prms = prms_on - prms_off;
 
 V_inf_descent  = 149;  %Descent speed of Airvus a318 https://contentzone.eurocontrol.int/aircraftperformance/details.aspx?ICAO=A318
 
-prms_corrected = prms * (V_inf_descent/V_inf_experiment)^2;
+prms_corrected = prms .* (V_inf_descent/V_inf_experiment)^2;
 
 end

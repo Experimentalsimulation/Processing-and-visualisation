@@ -7,11 +7,11 @@ clc
 fnFolder = './DATA'
 
 
-% fn = {'propon_de0.txt','propon_demin10.txt','propon_de10.txt','propon_de20.txt','propon_de25.txt','propoff_de0.txt','propoff_demin10.txt','propoff_de10.txt','propoff_de20.txt','propoff_de25.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
-fn = {'propoff_de0.txt','propon_de0.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
+fn = {'propon_de0.txt','propon_demin10.txt','propon_de10.txt','propon_de20.txt','propon_de25.txt','propoff_de0.txt','propoff_demin10.txt','propoff_de10.txt','propoff_de20.txt','propoff_de25.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
+% fn = {'propoff_de0.txt','propon_de0.txt'}; % structure of filenames to main txt file containing the averaged data - you can add multiple filenames here
 
-prop_track = [0,1];
-de_track = [0,0];
+prop_track = [1,1,1,1,1,0,0,0,0,0];
+de_track = [0,-10,10,20,25,0,-10,10,20,25];
 
 % settings for spectral analysis (pwelch function)
 nB       = 25;      % number of bins - can be modified to change frequency resolution of spectra
@@ -76,7 +76,7 @@ end % end while loop over files
 OASPL = {};
 n = 0;
 
-for i= 1:length(fn)
+for i = 1:length(fn)
 
     MIC_fn = MIC{i};
 
@@ -109,7 +109,7 @@ for i= 1:length(fn)
         end
 
         MIC_track(n).V_inf = round(V_inf, 0);
-        MIC_track(n).J = round(J, 3);
+        MIC_track(n).J = round(J, 1);    %DO not change this, otherwise the datapoints will mix together
         MIC_track(n).alpha = round(alpha, 0);
         
     end
@@ -158,6 +158,7 @@ for i = 1:length(MIC_track_propon)
 
 end
 
+
 %Apply correctoni to propon measurements
 for i = 1:length(MIC_track_propon)
     prms_on = Get_prms(MIC_track_propon(i).MIC);
@@ -167,6 +168,8 @@ for i = 1:length(MIC_track_propon)
 
     OASPL = Get_OASPL(prms_corrected);
 
+    MIC_track_propoff(correction_index_track(i)).prms = prms_off;
+
     MIC_track_propon(i).prms = prms_on;
     MIC_track_propon(i).prms_corrected = prms_corrected;
     MIC_track_propon(i).OASPL = OASPL;
@@ -174,15 +177,25 @@ for i = 1:length(MIC_track_propon)
 end
 
 
+save('MIC_track_propon.mat','MIC_track_propon' )
+
+
 figure('Name','Spectra')
 for i=1:7
     subplot(2,4,i), box on, hold on
-    plot(MIC{1}.f{6},MIC{1}.SPL{6}(:,i),'b')
-    plot(MIC{2}.f{2},MIC{2}.SPL{2}(:,i)-MIC{1}.SPL{6}(:,i),'r')
-    xlim([0 13])
+    plot(MIC_track_propon(1).MIC.f,MIC_track_propon(1).MIC.SPL(:,i),'b')
+    plot(MIC_track_propoff(1).MIC.f,MIC_track_propoff(1).MIC.SPL(:,i),'r')
     xlabel('Frequency f/RPS [-]')
     ylabel('SPL [dB]')
     title(['Mic ',num2str(i)])
-    ylim([50 120])
+    legend('Prop-on','prop-off')
 end
+
+
+figure('Name','OASPL')
+
+plot(MIC_track_propon(1).OASPL,'b')
+xlabel('mic [-]')
+ylabel('OASPL [dB]')
+title(['Mic ',num2str(i)])
    

@@ -1,20 +1,13 @@
 function [prms] = Get_prms(MIC)
     
 
-             
-        f = MIC.f;
-        PPX = MIC.PXX;
-        aPPx = [];
+        
+        prms = [];
+        for i = 1:length(MIC.pMic(:,1))
 
-        for  i = 1:length(f)
-
-              aPPx = [aPPx, mean(PPX(i, 1:3))]; % Calculate the mean along the rows (dimension 2) 1:3 means only mic 1 to 3 are used
+               prms(i) = std(MIC.pMic(i,:));
 
         end
 
-        df = f(2) - f(1);
-
-        prms= sum(aPPx.*df);
-             
 
 end
