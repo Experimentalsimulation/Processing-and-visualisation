@@ -4,7 +4,7 @@
 
 %% Initialization
 % clear workspace, figures, command window
-clear 
+clear
 close all
 clc
 
@@ -91,10 +91,12 @@ BAL = correctedBAL
 
 BAL = calculateDeltaCT(BAL,D,S)
 
-
+BAL = calculateCLh(BAL)
+plotelevatoreffec(BAL)
 % Result Plotting
-plotTCvsRPS(BAL)
-plotData(BAL)
+%plotTCvsRPS(BAL)
+%plotData(BAL)
+
 
 
 
