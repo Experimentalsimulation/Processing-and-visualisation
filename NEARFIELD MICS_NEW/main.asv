@@ -183,9 +183,9 @@ for i = 1:length(MIC_track_propon)
 
 
     %Correct spectral density
+
     
-    MIC_track_propon(i).MIC.SPL_corrected = MIC_track_propon(i).MIC.SPL - MIC_track_propoff(correction_index_track(i)).MIC.SPL;
-    
+
 
 end
 
