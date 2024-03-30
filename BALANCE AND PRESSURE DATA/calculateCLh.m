@@ -21,6 +21,10 @@ function BAL = calculateCLh(BAL)
     % Read the data
     line = fgetl(fileID);
     lineCount = 1;
+
+    if fid == -1
+    error('Cannot open file.')
+    end
     while ischar(line)
         % Split the line into cells
         cells = strsplit(line, '\t');
@@ -105,14 +109,5 @@ function BAL = calculateCLh(BAL)
         BAL.windOn.(BAL.config{i}).CDh = CDh;
         BAL.windOn.(BAL.config{i}).CM25ch = CM25ch;
     end
-
-
-
-        
-        
-        
-
-
-
 
 end

@@ -98,8 +98,8 @@ BAL = correctedBAL;
 
 BAL = calculateDeltaCT(BAL,D,S)
 
-BAL = calculateCLh(BAL)
-plotelevatoreffec(BAL)
+% BAL = calculateCLh(BAL)
+% plotelevatoreffec(BAL)
 % Result Plotting
 %plotTCvsRPS(BAL)
 %plotData(BAL)
