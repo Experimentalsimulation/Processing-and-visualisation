@@ -100,13 +100,17 @@ BAL = calculateDeltaCT(BAL,D,S)
 
 % Calculate tail data by substracting tail off data %
 BAL = calculateCLh(BAL)
+% Calculate trimmed conditions
+
+[BAL,Trimmed_conditions] = find_trimmed_conditions(BAL)
 
 %% --------Result Plotting-------- %%
 
 % plotTCvsRPS(BAL)
 % plotData(BAL)
 % plotelevatoreffec(BAL)
-% plotcontrolpower(BAL)
+plotcontrolpower(BAL)
+
 
 
 
