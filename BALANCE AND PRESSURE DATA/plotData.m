@@ -9,6 +9,7 @@ function plotData(BAL)
     for i = 1:numel(BAL.config)
         % Extract relevant data
         AoA = BAL.windOn.(BAL.config{i}).AoA;
+        rpsm1 = BAL.windOn.(BAL.config{i}).rpsM1;  
         CL = BAL.windOn.(BAL.config{i}).CL;
         CD = BAL.windOn.(BAL.config{i}).CD;
         CM = BAL.windOn.(BAL.config{i}).CMpitch;
