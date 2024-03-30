@@ -11,8 +11,14 @@ clc
 % As we have files in multiple paths, paths shoukld be added here
 currentfolder = pwd;
 mainfolder =  fullfile(currentfolder, '..', 'scripts');
+%mainfolder = fullfile(currentfolder)
 path = genpath(mainfolder);
+subpath1 = genpath('WindtunnelCorrections');
+subpath2 = genpath('BALANCE AND PRESSURE DATA'); 
 addpath(mainfolder);
+addpath(subpath1);
+addpath(subpath2);
+
 
 
 %% Inputs
@@ -84,8 +90,9 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 modelOffData = readModelOffData('BALANCE AND PRESSURE DATA\DATA\modeloffdata.txt');
 %disp(modelOffData);
-correctedBAL = correctBALData(BAL, modelOffData) 
-BAL = correctedBAL
+correctedBAL = correctBALData(BAL, modelOffData); 
+BAL = correctedBAL;
+[tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
 
 % Get Tc coefficient for prop on data 
 
