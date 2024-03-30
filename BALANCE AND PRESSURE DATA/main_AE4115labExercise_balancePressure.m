@@ -94,16 +94,19 @@ correctedBAL = correctBALData(BAL, modelOffData);
 BAL = correctedBAL;
 [tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
 
-% Get Tc coefficient for prop on data 
+% Get Tc coefficient for prop on data %
 
 BAL = calculateDeltaCT(BAL,D,S)
 
+% Calculate tail data by substracting tail off data %
 BAL = calculateCLh(BAL)
-plotelevatoreffec(BAL)
-% Result Plotting
-%plotTCvsRPS(BAL)
-%plotData(BAL)
 
+%% --------Result Plotting-------- %%
+
+% plotTCvsRPS(BAL)
+% plotData(BAL)
+% plotelevatoreffec(BAL)
+% plotcontrolpower(BAL)
 
 
 
