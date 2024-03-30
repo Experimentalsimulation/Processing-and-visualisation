@@ -14,7 +14,7 @@ function plotData = organizeDataForPlot(BAL)
         % Loop over RPS settings
         for r = 1:numel(RPS_settings)
             % Create field name
-            fieldName = sprintf('V%d_rps%d', windspeeds(w), r);
+            fieldName = sprintf('V%d-rps%d', windspeeds(w), RPS_settings(r));
             
             % Initialize CLh values for the current combination
             CLh_values = zeros(size(elevatorDeflections));
@@ -46,22 +46,27 @@ function plotData = organizeDataForPlot(BAL)
     elevatorDeflections = [0, 10, 20, 25, -10];
     
     % Define colors for plotting
-    colors = {'b', 'r', 'g', 'm', 'c', 'k'};
+    colors = {'b', 'r', 'g', 'm', 'c', 'k','b', 'r', 'g', 'm', 'c', 'k'};
     
     % Initialize figure
     figure;
     hold on;
-    
+    display(plotData)
     % Loop over the fieldnames in plotData
     fnames = fieldnames(plotData);
-    for i = 4:numel(fnames)
-        display
+    for i = 10:numel(fnames)
+        display(i)
         % Get CLh values for the current combination
         CLh_values = plotData.(fnames{i});
         
+        % Sort elevator deflections and CLh values
+        [elevatorDeflectionsSorted, sortIdx] = sort(elevatorDeflections);
+        CLh_valuesSorted = CLh_values(sortIdx);
+        
         % Plot CLh versus elevator deflection
-        plot(elevatorDeflections, CLh_values, 'o-', 'Color', colors{i}, 'DisplayName', fnames{i});
+        plot(elevatorDeflectionsSorted, CLh_valuesSorted, 'o-', 'Color', colors{i}, 'DisplayName', fnames{i});
     end
+
     
     % Add labels and legend
     xlabel('Elevator Deflection (degrees)');

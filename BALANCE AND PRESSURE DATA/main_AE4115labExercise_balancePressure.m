@@ -77,7 +77,7 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 %% Write your code here to apply the corrections and visualize the data
 % TODO dcm_da_tail() % compute dcm/da_tail 
-blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
+% blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
 % Substract model off balance data
@@ -91,8 +91,8 @@ BAL = correctedBAL
 
 BAL = calculateDeltaCT(BAL,D,S)
 
-% BAL = calculateCLh(BAL)
-% plotelevatoreffec(BAL)
+BAL = calculateCLh(BAL)
+plotelevatoreffec(BAL)
 % Result Plotting
 %plotTCvsRPS(BAL)
 %plotData(BAL)
