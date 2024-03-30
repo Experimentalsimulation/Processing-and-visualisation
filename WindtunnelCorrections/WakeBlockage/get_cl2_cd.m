@@ -1,4 +1,4 @@
-function [cl2_values, cd_values] = get_abc(BAL, v_interest, rps_interest, propOn, de)
+function [cl2_values, cd_values] = get_cl2_cd(BAL, v_interest, rps_interest, propon, de)
     % Returns cl and cd values for given velocity, rps, prop configuration
     % and flap deflection
     
@@ -11,10 +11,18 @@ function [cl2_values, cd_values] = get_abc(BAL, v_interest, rps_interest, propOn
     rps_tol = 2; % in m/s
 
     % determine struct path
-    if propOn
-        argument = sprintf('propon_de%d', de);
+    if propon
+        if de == -10
+            argument = sprintf('propon_demin10');
+        else
+            argument = sprintf('propon_de%d', de);
+        end
     else
-        argument = sprintf('propoff_de%d', de);
+        if de == -10
+            argument = sprintf('propoff_demin10');
+        else
+            argument = sprintf('propoff_de%d', de);
+        end
     end
     
     % extract relevant data
