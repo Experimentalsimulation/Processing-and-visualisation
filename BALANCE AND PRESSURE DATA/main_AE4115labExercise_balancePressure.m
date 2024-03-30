@@ -83,7 +83,7 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 %% Write your code here to apply the corrections and visualize the data
 % TODO dcm_da_tail() % compute dcm/da_tail 
-blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
+% blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
 % Substract model off balance data
@@ -94,16 +94,19 @@ correctedBAL = correctBALData(BAL, modelOffData);
 BAL = correctedBAL;
 [tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
 
-% Get Tc coefficient for prop on data 
+% Get Tc coefficient for prop on data %
 
 BAL = calculateDeltaCT(BAL,D,S)
 
-% BAL = calculateCLh(BAL)
-% plotelevatoreffec(BAL)
-% Result Plotting
-%plotTCvsRPS(BAL)
-%plotData(BAL)
+% Calculate tail data by substracting tail off data %
+BAL = calculateCLh(BAL)
 
+%% --------Result Plotting-------- %%
+
+% plotTCvsRPS(BAL)
+% plotData(BAL)
+% plotelevatoreffec(BAL)
+% plotcontrolpower(BAL)
 
 
 
