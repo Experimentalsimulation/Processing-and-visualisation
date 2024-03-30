@@ -28,8 +28,9 @@ function [] = blockage(BAL)
                 elevator = str2num(config(11:end)); % convert substring after _de to numericvalue
             end
         end
-
-        file = determine_filename(elevator, propon, true); % last boolean is windOn which ofcourse is the only option
+        
+        %file = determine_filename(elevator, propon, true); % last boolean is windOn which ofcourse is the only option
+        [cl2_20, cd_20] = get_cl2_cd(BAL, v_interest, rps_interest, propon, de)
         [cl2_20, cd_20] = get_Cl2_and_Cd(file,20);
         [cl2_40, cd_40] = get_Cl2_and_Cd(file,40);
         if isempty(cl2_20)
