@@ -17,9 +17,9 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
 
         
         %all data required to do lift interference 
-        V = BAL.windOn.(config).V;
+        V = BAL.windOn.(config).V; % not really used in calc only for lenght
         A = BAL.windOn.(config).AoA;
-        CM = BAL.windOn.(config).CMpitch25c;
+        CM = BAL.windOn.(config).CM25c_blocked;
 
         dcmdat = BAL.windOn.(config).dcmdat;
         CLa = BAL.windOn.(config).CLa;
