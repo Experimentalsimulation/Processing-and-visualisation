@@ -60,7 +60,7 @@ function BAL = calculateCLh(BAL)
     margin = 0.1;
 
     % Loop over the BAL data configurations
-    for i = 6:numel(BAL.config)
+    for i = 1:numel(BAL.config)
         % Extract data arrays from BAL for the current configuration
         CL = BAL.windOn.(BAL.config{i}).CL;
         CD = BAL.windOn.(BAL.config{i}).CD;
@@ -109,6 +109,7 @@ function BAL = calculateCLh(BAL)
         BAL.windOn.(BAL.config{i}).CLh = CLh;
         BAL.windOn.(BAL.config{i}).CDh = CDh;
         BAL.windOn.(BAL.config{i}).CM25ch = CM25ch;
+        
     end
 
 end

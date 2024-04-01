@@ -103,7 +103,7 @@ BAL = calculateDeltaCT(BAL,D,S);
 % Calculate tail data by substracting tail off data %
 BAL = calculateCLh(BAL);
 
-%Lift interference correction 
+%% Lift interference correction 
 [tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
 BAL = dcmdat(BAL);
 BAL = liftinterference(BAL, tail_off_20, tail_off_40);

@@ -20,6 +20,8 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
         A = BAL.windOn.(config).AoA;
         CM = BAL.windOn.(config).CMpitch25c;
 
+        dcmdat = BAL.windOn.(config).dcmdat;
+
         BAL.windOn.(config).AoA_bc = zeros(1, numel(A));
         BAL.windOn.(config).CM25c_bc = zeros(1, numel(A));
 
@@ -37,7 +39,7 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
             end
             da = tau2 * delta * S/C * CLwing;
             datail = delta * S/C * CLwing * (1 + tau2_tail);
-            dcm025 = da * CL_alpha/8 + dcmat * datail;
+            dcm025 = da * CL_alpha/8 + dcmdat * datail;
 
             BAL.windOn.(config).AoA_bc(j) = A(j) + da;
             BAL.windOn.(config).CM25c_bc(j) = CM(j) + dcm025; 
