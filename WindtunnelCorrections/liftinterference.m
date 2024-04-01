@@ -20,13 +20,15 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
         V = BAL.windOn.(config).V; % not really used in calc only for lenght
         A = BAL.windOn.(config).AoA;
         CM = BAL.windOn.(config).CM25c_blocked;
+        CD = BAL.windOn.(config).CD_blocked;
 
         dcmdat = BAL.windOn.(config).dcmdat;
         CLa = BAL.windOn.(config).CLa;
 
         BAL.windOn.(config).AoA_bc = zeros(1, numel(A));
-        BAL.windOn.(config).CM25c_bc = zeros(1, numel(A));
-
+        BAL.windOn.(config).CM_bc = zeros(1, numel(A));
+        BAL.windOn.(config).CD_bc = zeros(1, numel(A));
+ 
         %Take correct tail off data based on V
         for j = 1:numel(V)
             alpha = A(j);
@@ -59,11 +61,13 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
             da = tau2 * delta * S/C * CLwing
             datail = delta * S/C * CLwing * (1 + tau2_tail);
             dcm025 = da * CLa(j)/8 + dcmdat(j) * datail;
+            dCD = delta * S/C * CLwing^2
             if numel(da) > 1
                 disp('help')
             end
             BAL.windOn.(config).AoA_bc(j) = A(j) + da;
-            BAL.windOn.(config).CM25c_bc(j) = CM(j) + dcm025; 
+            BAL.windOn.(config).CM_bc(j) = CM(j) + dcm025; 
+            BAL.windOn.(config).CD_bc(j) = CD(j) + dCD
         end
     end
 end
