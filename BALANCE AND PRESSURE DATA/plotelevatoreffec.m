@@ -16,16 +16,16 @@ function plotData = organizeDataForPlot(BAL)
             % Create field name
             fieldName = sprintf('V%dRPS%d', windspeeds(w), RPS_settings(r));
             
-            % Initialize CLh values for the current combination
-            CLh_values = zeros(size(elevatorDeflections));
+            % Initialize CL values for the current combination
+            CL_values = zeros(size(elevatorDeflections));
             
-            % Extract CLh for the current combination of windspeed and RPS
+            % Extract CL for the current combination of windspeed and RPS
             for i = 6:numel(BAL.config)
                 % Get the configuration name
                 configName = BAL.config{i};
                 
-                % Extract CLh, AoA, RPS, and windspeed for the current configuration
-                CLh = BAL.windOn.(configName).CLh;
+                % Extract CL, AoA, RPS, and windspeed for the current configuration
+                CL = BAL.windOn.(configName).CL;
                 AoA = round(BAL.windOn.(configName).AoA);
                 current_RPS = round(BAL.windOn.(configName).rpsM1);
                 current_V = round(BAL.windOn.(configName).V);
@@ -33,12 +33,12 @@ function plotData = organizeDataForPlot(BAL)
                 % Find indices where AoA is zero and windspeed and RPS match the current combination
                 idx = find(AoA == 0 & current_RPS == RPS_settings(r) & current_V == windspeeds(w));
                 
-                % Store CLh value corresponding to the matching elevator deflection
-                CLh_values(i-5) = mean(CLh(idx));
+                % Store CL value corresponding to the matching elevator deflection
+                CL_values(i-5) = mean(CL(idx));
             end
             
-            % Store CLh values in the plotData struct
-            plotData.(fieldName) = CLh_values;
+            % Store CL values in the plotData struct
+            plotData.(fieldName) = CL_values;
         end
     end
     % Plot 
@@ -56,22 +56,22 @@ function plotData = organizeDataForPlot(BAL)
     fnames = fieldnames(plotData);
     for i = 10:numel(fnames)
         display(i)
-        % Get CLh values for the current combination
-        CLh_values = plotData.(fnames{i});
+        % Get CL values for the current combination
+        CL_values = plotData.(fnames{i});
         
-        % Sort elevator deflections and CLh values
+        % Sort elevator deflections and CL values
         [elevatorDeflectionsSorted, sortIdx] = sort(elevatorDeflections);
-        CLh_valuesSorted = CLh_values(sortIdx);
+        CL_valuesSorted = CL_values(sortIdx);
         
-        % Plot CLh versus elevator deflection
-        plot(elevatorDeflectionsSorted, CLh_valuesSorted, 'o-', 'Color', colors{i}, 'DisplayName', fnames{i});
+        % Plot CL versus elevator deflection
+        plot(elevatorDeflectionsSorted, CL_valuesSorted, 'o-', 'Color', colors{i}, 'DisplayName', fnames{i});
     end
 
     
     % Add labels and legend
     xlabel('Elevator Deflection (degrees)');
-    ylabel('CLh');
-    title('CLh vs Elevator Deflection for Different RPS and Windspeeds');
+    ylabel('CL');
+    title('Elevator Effectiveness');
     legend('Location', 'best');
     grid on;
     

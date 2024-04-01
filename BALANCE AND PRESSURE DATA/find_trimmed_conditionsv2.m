@@ -46,7 +46,7 @@
                     configName = confignames{i};
                     
                     % Extract relevant data from the BAL structure
-                    CMpitch = BAL.windOn.(configName).CMpitch;
+                    CMpitch = BAL.windOn.(configName).CMpitch25c;
                     CL = BAL.windOn.(configName).CL;
                     CD = BAL.windOn.(configName).CD;
                     AoA = round(BAL.windOn.(configName).AoA);

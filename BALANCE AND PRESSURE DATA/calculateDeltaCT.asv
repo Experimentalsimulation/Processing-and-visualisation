@@ -48,14 +48,13 @@ function BAL = calculateDeltaCT(BAL,D,S)
             % If a match is found, subtract CT values
             if ~isempty(matching_idx)
                 delta =  proponCT{i}.CT(j) - propoffCT{i}.CT(matching_idx);
-                T_ind =  1/2 * proponCT{i}.rho(j)* proponCT{i}.V(j)^2 * S * delta ;
+                T_ind =  proponCT{i}.q(j) * S * delta ;
                 TC_ind = T_ind / (2* proponCT{i}.q(j)*SP);
-                J = proponCT{i}.V(j) / (proponCT{i}.n(j) * D);
-                TC2_ind = T_ind / (proponCT{i}.rho(j) * proponCT{i}.n(j)^2 * D^4) / J^2;
+                TC2_ind = T_ind / (proponCT{i}.rho(j) * proponCT{i}.n(j)^2 * D^4* proponCT{i}.J(j)^2);
                 subtractedCT(end+1) = delta;
                 TC_list(end+1) = TC_ind;
                 T_list(end+1) = T_ind;
-                TC2_list(end+1) = TC2_ind;
+                TC2_list(end+1) = 
             end
         end
 

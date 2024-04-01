@@ -66,8 +66,8 @@ function plotData = plotcontrolpower(BAL)
 
     % Add labels and legend
     xlabel('Elevator Deflection (degrees)');
-    ylabel('CMpitch');
-    title('CMpitch vs Elevator Deflection for Different RPS and Windspeeds');
+    ylabel('CM');
+    title('Control Power');
     legend('Location', 'best');
     grid on;
     
