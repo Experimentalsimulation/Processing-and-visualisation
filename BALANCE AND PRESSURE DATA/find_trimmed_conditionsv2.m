@@ -79,7 +79,6 @@
                 Trimmed_conditions.(fieldName).CM = CMpitch_sorted;
                 Trimmed_conditions.(fieldName).CL = CL_sorted;
                 Trimmed_conditions.(fieldName).CD = CD_sorted;
-
                 % Calculate trimmed conditions
                 % Polynomial fit for CM to find the zero-crossing, which indicates trimmed condition for elevator deflection
                 p_CM = polyfit(sortedDeflections, CMpitch_sorted, 2);

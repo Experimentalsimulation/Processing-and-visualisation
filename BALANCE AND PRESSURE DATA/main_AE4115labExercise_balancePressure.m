@@ -83,16 +83,19 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 %% Write your code here to apply the corrections and visualize the data
 % TODO dcm_da_tail() % compute dcm/da_tail 
+
+
+%% ---- Blockage ----- %%
+
 BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
-% Substract model off balance data
+%% ---- Substract model off balance data ---- %%
 
 modelOffData = readModelOffData('BALANCE AND PRESSURE DATA\DATA\modeloffdata.txt');
 %disp(modelOffData);
 correctedBAL = correctBALData(BAL, modelOffData); 
 BAL = correctedBAL;
-
 
 
 
@@ -106,8 +109,8 @@ BAL = calculateCLh(BAL);
 % [BAL,Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
 %% Lift interference correction 
 [tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
-BAL = dcmdat(BAL);
-BAL = liftinterference(BAL, tail_off_20, tail_off_40);
+%BAL = dcmdat(BAL);
+%BAL = liftinterference(BAL, tail_off_20, tail_off_40);
 
 %% --------Result Plotting-------- %%
 
