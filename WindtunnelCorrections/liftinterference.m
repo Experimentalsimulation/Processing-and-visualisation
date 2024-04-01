@@ -14,6 +14,7 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
     %loop over all data to be corrected 
     for i = 1:numel(BAL.config)
         config = BAL.config{i};
+
         
         %all data required to do lift interference 
         V = BAL.windOn.(config).V;
@@ -21,6 +22,7 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
         CM = BAL.windOn.(config).CMpitch25c;
 
         dcmdat = BAL.windOn.(config).dcmdat;
+        CLa = BAL.windOn.(config).CLa;
 
         BAL.windOn.(config).AoA_bc = zeros(1, numel(A));
         BAL.windOn.(config).CM25c_bc = zeros(1, numel(A));
@@ -31,20 +33,25 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
             
             if V(j) < 22
                 % Find the matching row based on AoA and take CL
-                CLwing = tail_off_20(tail_off_20.AoA >= alpha * 0.9 | tail_off_20.AoA <= alpha * 1.1, :).CL;
+                CLwing = tail_off_20(tail_off_20.AoA >= alpha * 0.94 & tail_off_20.AoA <= alpha * 1.06, :).CL;
+                if CLwing == 0
+                    disp('help')
+                end
+
                 
             else
                 % Find the matching row based on AoA and take CL
-                CLwing = tail_off_40(tail_off_40.AoA >= alpha * 0.9 | tail_off_40.AoA <= alpha * 1.1, :).CL;
+                CLwing = tail_off_40(tail_off_40.AoA >= alpha * 0.94 & tail_off_40.AoA <= alpha * 1.06, :).CL;
+                if CLwing == 0
+                    disp('help')
+                end
             end
-            da = tau2 * delta * S/C * CLwing;
+            % TODO check units of angles and derivatives rad or deg
+            da = tau2 * delta * S/C * CLwing
             datail = delta * S/C * CLwing * (1 + tau2_tail);
-            dcm025 = da * CL_alpha/8 + dcmdat * datail;
-
+            dcm025 = da * CLa(j)/8 + dcmdat(j) * datail;
             BAL.windOn.(config).AoA_bc(j) = A(j) + da;
             BAL.windOn.(config).CM25c_bc(j) = CM(j) + dcm025; 
         end
-        
-
     end
 end

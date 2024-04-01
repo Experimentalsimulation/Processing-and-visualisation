@@ -11,7 +11,8 @@ function BAL = blockage(BAL)
         q = BAL.windOn.(config).q;
         CL = BAL.windOn.(config).CL;
         CD = BAL.windOn.(config).CD;
-        CM = BAL.windOn.(config).CMpitch25c;
+        CM = BAL.windOn.(config).CMpitch;
+        CM_25 = BAL.windOn.(config).CMpitch25c;
 
 
         %initialising epsilon wake array 
@@ -109,10 +110,10 @@ function BAL = blockage(BAL)
 
             BAL.windOn.(BAL.config{i}).V_blocked = V .* (1 + epsilon);
             BAL.windOn.(BAL.config{i}).q_blocked = q .* (1 + epsilon).^2;
-    
             BAL.windOn.(BAL.config{i}).CL_blocked = CL .* (1 + epsilon).^-2;
             BAL.windOn.(BAL.config{i}).CD_blocked = CD .* (1 + epsilon).^-2;
-            BAL.windOn.(BAL.config{i}).CMpitch25c_blocked = CM .* (1 + epsilon).^-2;
+            BAL.windON.(BAL.config{i}).CM_blocked = CM .* (1 + epsilon).^-2;
+            BAL.windOn.(BAL.config{i}).CMp25c_blocked = CM_25 .* (1 + epsilon).^-2;
             BAL.windOn.(BAL.config{i}).CT_blockd = CT .* (1 + epsilon).^-2;
             
 
