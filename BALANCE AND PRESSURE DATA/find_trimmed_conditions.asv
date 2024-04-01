@@ -1,0 +1,57 @@
+function [BAL, Trimmed_conditions] = find_trimmed_conditions(BAL)
+    %% This function finds the trimmed conditions for 3 configurations
+    % These 3 configs are: 
+    % V = 40 --- RPS = 51
+    % V = 40 --- RPS = 59
+    % V = 40 --- RPS = 67
+
+    % Define elevator deflection values
+    elevatorDeflections = [0, 10, 20, 25, -10];
+    
+    % Define windspeeds and RPS settings
+    windspeeds = [40];
+    RPS_settings = unique(round(BAL.windOn.(BAL.config{7}).rpsM1));
+    
+    % Initialize plot data struct
+    Trimmed_conditions = struct();
+    CM_de = struct()
+    % Loop over windspeeds
+    for w = 1:numel(windspeeds)
+        % Loop over RPS settings
+        for r = 1:numel(RPS_settings)
+            % Create field name
+            fieldName = sprintf('V%dRPS%d', windspeeds(w), RPS_settings(r));
+            
+            % Initialize CMpitch values for the current combination
+            CMpitch_values = zeros(size(elevatorDeflections));
+            
+            % Extract CMpitch for the current combination of windspeed and RPS
+            for i = 6:numel(BAL.config)
+                % Get the configuration name
+                configName = BAL.config{i};
+                
+                % Extract CMpitch, AoA, RPS, and windspeed for the current configuration
+                CMpitch = BAL.windOn.(configName).CMpitch;
+                AoA = round(BAL.windOn.(configName).AoA);
+                current_RPS = round(BAL.windOn.(configName).rpsM1);
+                current_V = round(BAL.windOn.(configName).V);
+                
+                % Find indices where AoA is zero, and windspeed and RPS match the current combination
+                idx = find(AoA == 0 & current_RPS == RPS_settings(r) & current_V == windspeeds(w));
+                disp(configName)
+                disp(idx)
+                % Store CMpitch values corresponding to the matching elevator deflections
+                CMpitch_values(i-5) = CMpitch(idx);
+            end
+            % Sort elevator deflections and CLh values
+            [elevatorDeflectionsSorted, sortIdx] = sort(elevatorDeflections);
+            CLh_valuesSorted = CLh_values(sortIdx);
+            % Store CMpitch values in the plotData struct
+            CM_de.(fieldName).CM = CMpitch_values;
+            CM_de.(fieldName).de = elevatorDeflections
+            
+        end
+    end
+    disp(CM_de.(fieldName).CM)
+    disp(CM_de.(fieldName).de)
+end
