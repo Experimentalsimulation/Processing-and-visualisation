@@ -84,12 +84,12 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 %% ------------------   Write your code here to apply the corrections and visualize the data --------------------- %%
 % TODO dcm_da_tail() % compute dcm/da_tail 
 
-BAL = deleteDataPoint(BAL)
+BAL = deleteDataPoint(BAL) % This function deletes a datapoint that was taken by accident at random conditions
 
 %% ---- Blockage ----- %%
 % Get Tc coefficient for prop on data %
 BAL = calculateDeltaCT(BAL,D,S);
-%BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
+BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
 %% ---- Substract model off balance data to account for dynamic pressure forces on balance struts---- %%
