@@ -1,4 +1,4 @@
-function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
+    function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
     %% This function finds the trimmed conditions for all angles of attack for 3 configurations
     % Define elevator deflection values
     elevatorDeflections = [0, 10, 20, 25, -10];
@@ -23,7 +23,14 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
     % Loop over unique angles of attack
     for a = 1:numel(uniqueAoA)
         currentAoA = uniqueAoA(a);
-
+        % Specify elevator deflection values for each AoA
+        if currentAoA == 0
+            elevatorDeflections = [0, 10, 20, 25, -10];
+            confignames = {'propon_de0', 'propon_de10', 'propon_de20', 'propon_de25', 'propon_demin10'};
+        else 
+            elevatorDeflections = [0, 10, -10];
+            confignames = {'propon_de0', 'propon_de10', 'propon_demin10'};
+        end
         % Loop over windspeeds
         for w = 1:numel(windspeeds)
 
@@ -35,8 +42,8 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
                 CD_values = zeros(1, numel(elevatorDeflections));
                 
                 % Iterate over configurations to populate the above arrays
-                for i = 6:numel(BAL.config)
-                    configName = BAL.config{i};
+                for i = 1:numel(confignames)
+                    configName = confignames{i};
                     
                     % Extract relevant data from the BAL structure
                     CMpitch = BAL.windOn.(configName).CMpitch;
@@ -51,9 +58,9 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
                     
                     if ~isempty(idx)
                         % Assuming idx always returns a single value per i
-                        CMpitch_values(i-5) = CMpitch(idx);
-                        CL_values(i-5) = CL(idx);
-                        CD_values(i-5) = CD(idx);
+                        CMpitch_values(i) = CMpitch(idx);
+                        CL_values(i) = CL(idx);
+                        CD_values(i) = CD(idx);
                     end
                 end
                 
@@ -162,17 +169,14 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
             CD_fine = polyval(p, CL_fine);
             
             % Plot the quadratic fit
-            plot(CL_fine, CD_fine, 'LineStyle', '-', 'Color', colors(r, :), ...
-                 'DisplayName', sprintf('Fit RPS %d', RPS_settings(r)));
+            plot(CL_fine, CD_fine, 'LineStyle', '-', 'Color', colors(r, :), 'DisplayName', sprintf('Fit RPS %d', RPS_settings(r)));
             
             % Calculate CL/CD ratio over the fine range and find maximum
             CL_CD_ratio_fine = CL_fine ./ CD_fine;
             [max_ratio, max_idx] = max(CL_CD_ratio_fine);
             
             % Highlight the maximal CL/CD ratio point
-            scatter(CL_fine(max_idx), CD_fine(max_idx), 'x', ...
-                    'MarkerEdgeColor', colors(r, :), 'LineWidth', 2, ...
-                    'DisplayName', sprintf('Optimal RPS %d', RPS_settings(r)));
+            scatter(CL_fine(max_idx), CD_fine(max_idx), 'x','MarkerEdgeColor', colors(r, :), 'LineWidth', 2, 'DisplayName', sprintf('Optimal RPS %d', RPS_settings(r)));
                     
             % Store maximal CL/CD ratio info for annotation
             max_CL_CD_info{r} = sprintf('RPS %d: Max CL/CD = %.2f at CL = %.2f, CD = %.2f', ...

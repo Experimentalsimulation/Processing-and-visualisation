@@ -23,7 +23,7 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
     % Loop over unique angles of attack
     for a = 1:numel(uniqueAoA)
         currentAoA = uniqueAoA(a);
-
+        
         % Loop over windspeeds
         for w = 1:numel(windspeeds)
 
@@ -96,57 +96,11 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
             end
         end
     end
-    % After calculating all trimmed conditions in the loop
-
-
-    % Initialize arrays to store maximal CL/CD ratios
-    max_CL_CD_ratios = zeros(1, numel(RPS_settings));
-    optimal_CD = zeros(1, numel(RPS_settings));
-    optimal_CL = zeros(1, numel(RPS_settings));
     
-    % Iterate over each RPS setting to perform quadratic interpolation
-    for r = 1:numel(RPS_settings)
-        % Check if there are enough points for quadratic fitting
-        if numel(CD_values_trimmed{r}) > 2
-            % Quadratic fit: CD as x, CL as y
-            [p, S] = polyfit(CD_values_trimmed{r}, CL_values_trimmed{r}, 2);
-            
-            % Define a fine range of CD values for evaluating the fit and CL/CD ratio
-            CD_fine = linspace(min(CD_values_trimmed{r}), max(CD_values_trimmed{r}), 1000);
-            CL_fine = polyval(p, CD_fine);
-            
-            % Calculate CL/CD ratio over the fine range and find maximum
-            CL_CD_ratio_fine = CL_fine ./ CD_fine;
-            [max_ratio, max_idx] = max(CL_CD_ratio_fine);
-            
-            % Store the maximal CL/CD ratio and corresponding CL and CD
-            max_CL_CD_ratios(r) = max_ratio;
-            optimal_CD(r) = CD_fine(max_idx);
-            optimal_CL(r) = CL_fine(max_idx);
-            
-            % Plot the quadratic fit for visualization
-            plot(CD_fine, CL_fine, 'LineStyle', '--', 'Color', colors(r, :), 'HandleVisibility', 'off'); % Same color, but dashed
-        else
-            max_CL_CD_ratios(r) = NaN; % Not enough data points to fit
-            optimal_CD(r) = NaN;
-            optimal_CL(r) = NaN;
-        end
-    end
-    
-    % Annotate the plot with the maximal CL/CD points for each RPS setting
-    for r = 1:numel(RPS_settings)
-        if ~isnan(max_CL_CD_ratios(r))
-            scatter(optimal_CD(r), optimal_CL(r), 'x', 'MarkerEdgeColor', colors(r, :), 'LineWidth', 2, 'DisplayName', sprintf('Optimal RPS %d', RPS_settings(r)));
-        end
-    end
-    
-    % Display maximal CL/CD ratios
-    disp('Maximal CL/CD Ratios for each RPS setting:');
-    for r = 1:numel(RPS_settings)
-        fprintf('RPS %d: Max CL/CD = %.2f at CL = %.2f, CD = %.2f\n', RPS_settings(r), max_CL_CD_ratios(r), optimal_CL(r), optimal_CD(r));
-    end
 
+   
 
+    %% ------ PLot CL vs CD ------ %%
 
 
     % Initialize containers for CL and CD values for plotting
@@ -187,4 +141,56 @@ function [BAL, Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
     legend('show');
     grid on;
     hold off;
+
+     %% ------ Calculate max L/D ------ %%
+
+
+    % Initialize arrays to store maximal CL/CD ratios
+    % Second Plot: Quadratic Fits and Maximal CL/CD Ratios with CD on y-axis
+    figure;
+    hold on;
+    colors = lines(numel(RPS_settings)); % Unique colors for each RPS setting
+    max_CL_CD_info = cell(1, numel(RPS_settings)); % To store text info for annotations
+    
+    for r = 1:numel(RPS_settings)
+        if numel(CD_values_trimmed{r}) > 2 % Ensure there are enough points for quadratic fitting
+            % Quadratic fit: CD as y, CL as x
+            [p, ~] = polyfit(CL_values_trimmed{r}, CD_values_trimmed{r}, 2);
+            
+            % Define a fine range of CL values for evaluating the fit and maximizing CL/CD ratio
+            CL_fine = linspace(min(CL_values_trimmed{r}), max(CL_values_trimmed{r}), 1000);
+            CD_fine = polyval(p, CL_fine);
+            
+            % Plot the quadratic fit
+            plot(CL_fine, CD_fine, 'LineStyle', '-', 'Color', colors(r, :), 'DisplayName', sprintf('Fit RPS %d', RPS_settings(r)));
+            
+            % Calculate CL/CD ratio over the fine range and find maximum
+            CL_CD_ratio_fine = CL_fine ./ CD_fine;
+            [max_ratio, max_idx] = max(CL_CD_ratio_fine);
+            
+            % Highlight the maximal CL/CD ratio point
+            scatter(CL_fine(max_idx), CD_fine(max_idx), 'x','MarkerEdgeColor', colors(r, :), 'LineWidth', 2, 'DisplayName', sprintf('Optimal RPS %d', RPS_settings(r)));
+                    
+            % Store maximal CL/CD ratio info for annotation
+            max_CL_CD_info{r} = sprintf('RPS %d: Max CL/CD = %.2f at CL = %.2f, CD = %.2f', ...
+                                        RPS_settings(r), max_ratio, CL_fine(max_idx), CD_fine(max_idx));
+        else
+            % Handle cases with insufficient data
+            max_CL_CD_info{r} = sprintf('RPS %d: Insufficient data', RPS_settings(r));
+        end
+    end
+    
+    xlabel('CL (Lift Coefficient)');
+    ylabel('CD (Drag Coefficient)');
+    title('Quadratic Fits and Maximal CL/CD Ratio Points for Different RPS Settings');
+    legend('show', 'Location', 'best');
+    grid on;
+    hold off;
+    
+    % Display maximal CL/CD ratios annotations
+    for r = 1:numel(RPS_settings)
+        disp(max_CL_CD_info{r});
+    end
+
+   
 end
