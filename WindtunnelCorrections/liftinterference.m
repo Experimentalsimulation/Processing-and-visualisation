@@ -33,23 +33,36 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
             
             if V(j) < 22
                 % Find the matching row based on AoA and take CL
-                CLwing = tail_off_20(tail_off_20.AoA >= alpha * 0.94 & tail_off_20.AoA <= alpha * 1.06, :).CL;
-                if CLwing == 0
-                    disp('help')
+                if alpha > 0
+                    CLwing = tail_off_20(tail_off_20.AoA >= alpha * 0.94 & tail_off_20.AoA <= alpha * 1.06, :).CL;
+                else
+                    CLwing = tail_off_20(tail_off_20.AoA <= alpha * 0.94 & tail_off_20.AoA >= alpha * 1.06, :).CL;
+                end
+
+                if isempty(CLwing)
+                    warning('no mathing aoa found ')
                 end
 
                 
             else
                 % Find the matching row based on AoA and take CL
-                CLwing = tail_off_40(tail_off_40.AoA >= alpha * 0.94 & tail_off_40.AoA <= alpha * 1.06, :).CL;
-                if CLwing == 0
-                    disp('help')
+                if alpha > 0
+                    CLwing = tail_off_40(tail_off_40.AoA >= alpha * 0.94 & tail_off_40.AoA <= alpha * 1.06, :).CL;
+                else
+                    CLwing = tail_off_40(tail_off_40.AoA <= alpha * 0.94 & tail_off_40.AoA >= alpha * 1.06, :).CL;
+                end
+
+                if isempty(CLwing)
+                    warning('no mathing aoa found ')
                 end
             end
             % TODO check units of angles and derivatives rad or deg
             da = tau2 * delta * S/C * CLwing
             datail = delta * S/C * CLwing * (1 + tau2_tail);
             dcm025 = da * CLa(j)/8 + dcmdat(j) * datail;
+            if numel(da) > 1
+                disp('help')
+            end
             BAL.windOn.(config).AoA_bc(j) = A(j) + da;
             BAL.windOn.(config).CM25c_bc(j) = CM(j) + dcm025; 
         end

@@ -6,7 +6,7 @@ function BAL = blockage(BAL)
         config = BAL.config{i};
         
         % Extract CT values from BAL
-        CT = BAL.windOn.(config).CT; %  This should be called Tc
+        TC = BAL.windOn.(config).TC; %  This should be called Tc
         V = BAL.windOn.(config).V;
         q = BAL.windOn.(config).q;
         CL = BAL.windOn.(config).CL;
@@ -105,7 +105,7 @@ function BAL = blockage(BAL)
          end % for i in V
      end 
             eps_solid = solidblockage(V) * ones(1,length(V));
-            eps_reg = reshape(Regenblockage(CT), 1, []);
+            eps_reg = reshape(Regenblockage(TC), 1, []);
             epsilon = eps_solid + eps_wake + eps_reg;
 
             BAL.windOn.(BAL.config{i}).V_blocked = V .* (1 + epsilon);
@@ -114,7 +114,7 @@ function BAL = blockage(BAL)
             BAL.windOn.(BAL.config{i}).CD_blocked = CD .* (1 + epsilon).^-2;
             BAL.windON.(BAL.config{i}).CM_blocked = CM .* (1 + epsilon).^-2;
             BAL.windOn.(BAL.config{i}).CMp25c_blocked = CM_25 .* (1 + epsilon).^-2;
-            BAL.windOn.(BAL.config{i}).CT_blockd = CT .* (1 + epsilon).^-2;
+            BAL.windOn.(BAL.config{i}).TC_blockd = TC .* (1 + epsilon).^-2;
             
 
 
