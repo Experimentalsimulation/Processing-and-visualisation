@@ -86,7 +86,8 @@ BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,model
 
 
 %% ---- Blockage ----- %%
-
+% Get Tc coefficient for prop on data %
+BAL = calculateDeltaCT(BAL,D,S);
 BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
@@ -99,9 +100,7 @@ BAL = correctedBAL;
 
 
 
-% Get Tc coefficient for prop on data %
 
-BAL = calculateDeltaCT(BAL,D,S);
 
 % Calculate tail data by substracting tail off data %
 BAL = calculateCLh(BAL);
