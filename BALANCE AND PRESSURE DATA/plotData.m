@@ -15,6 +15,11 @@ function plotData(BAL)
         CM = BAL.windOn.(BAL.config{i}).CMpitch;
         V = BAL.windOn.(BAL.config{i}).V;
         AoA = round(AoA)
+        
+        CL_unc = BAL.windOn.(BAL.config{i}).CL_uncorrected;
+        CD_unc = BAL.windOn.(BAL.config{i}).CD_uncorrected;
+        CM_unc = BAL.windOn.(BAL.config{i}).CMpitch_uncorrected;
+    
         % Round speeds to the nearest integer
         rounded_speeds = round(V);
     
@@ -24,27 +29,30 @@ function plotData(BAL)
         % Loop through each unique speed
         for j = 1:length(unique_speeds)
             % Extract data for the current speed
-            idx_speed = find(rounded_speeds == unique_speeds(j));
-    
+            idx_speed = find(rounded_speeds == unique_speeds(j) & round(rpsm1) == 51);
+            disp(idx_speed)
             % Check if the sequence has exactly 4 data points
             if sum(ismember(desired_AoA_sequence, AoA(idx_speed))) == 4
                 % Order the data for the current speed according to the desired sequence
                 [~, order_idx] = ismember(desired_AoA_sequence, AoA(idx_speed));
-    
+
                 % Plot CL vs CD for the current speed
                 subplot(1, 3, 1);
                 plot(CL(idx_speed(order_idx)), CD(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s']);
                 hold on;
-    
+                plot(CL_unc(idx_speed(order_idx)), CD_unc(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
+
                 % Plot CL vs AoA for the current speed
                 subplot(1, 3, 2);
                 plot(AoA(idx_speed(order_idx)), CL(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s']);
                 hold on;
-    
+                plot(AoA(idx_speed(order_idx)), CL_unc(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
+
                 % Plot CM vs AoA for the current speed
                 subplot(1, 3, 3);
                 plot(AoA(idx_speed(order_idx)), CM(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s']);
                 hold on;
+                plot(AoA(idx_speed(order_idx)), CM_unc(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
             end
         end
     end

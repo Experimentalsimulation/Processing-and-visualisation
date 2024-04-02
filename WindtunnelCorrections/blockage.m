@@ -24,7 +24,7 @@ function BAL = blockage(BAL)
         BAL.windOn.(BAL.config{i}).CL_blocked = zeros(length(V));
         BAL.windOn.(BAL.config{i}).CD_blocked = zeros(length(V));
         BAL.windOn.(BAL.config{i}).CMpitch25c_blocked = zeros(length(V));
-        BAL.windOn.(BAL.config{i}).TC_blockd = zeros(length(V));
+        BAL.windOn.(BAL.config{i}).TC_blocked = zeros(length(V));
 
         %Maskells method 
         if config(1:6) == 'propon'
@@ -119,7 +119,7 @@ function BAL = blockage(BAL)
         BAL.windOn.(BAL.config{i}).CM_blocked = CM .* (1 + epsilon).^-2;
         BAL.windOn.(BAL.config{i}).CM25c_blocked = CM_25 .* (1 + epsilon).^-2;
         if config(1:6) == 'propon'
-            BAL.windOn.(BAL.config{i}).TC_blockd = TC .* (1 + epsilon).^-2;
+            BAL.windOn.(BAL.config{i}).TC_blocked = TC .* (1 + epsilon).^-2;
         end
      end 
             
