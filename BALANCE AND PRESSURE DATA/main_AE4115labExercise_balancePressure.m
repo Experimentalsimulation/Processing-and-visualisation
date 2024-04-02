@@ -16,10 +16,10 @@ path = genpath(mainfolder);
 subpath1 = genpath('WindtunnelCorrections');
 subpath2 = genpath('BALANCE AND PRESSURE DATA'); 
 addpath(mainfolder);
-addpath(subpath1);
+addpath(subpath1); 
 addpath(subpath2);
 
-
+disp('ik hou van anton')
 
 %% Inputs
 
@@ -114,16 +114,20 @@ BAL = liftinterference(BAL, tail_off_20, tail_off_40);
 %% ---- Create Corrected and Uncorrected BAL Struct ---- %%
 
 Uncorrected_BAL = BAL
-blockage_and_lift_corrected_BAL = BAL
-% blockage_and_lift_corrected_BAL = structureData(BAL)
+%
+blockage_and_lift_corrected_BAL = structureData(BAL)
+BAL = blockage_and_lift_corrected_BAL
 %% ---- Calculate and plot aerodynamic performance at trimmed conditions ---- %
 
 [BAL,Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
 
 %% --------Result Plotting-------- %%
-plotelevatoreffec(BAL)
+PlotReynoldsCom(BAL)
+% plotData(BAL)
+% plotelevatoreffec(BAL)
 % plotTCvsRPS(BAL)% plotData(BAL)
 % plotcontrolpower(BAL)
+% plotcontrolpowerV2(BAL)
 % plotcmalpha(BAL)	
 
 
