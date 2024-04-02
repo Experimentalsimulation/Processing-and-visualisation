@@ -6,7 +6,7 @@ function [cl2_values, cd_values] = get_cl2_cd(BAL, v_interest, rps_interest, pro
     cl_values = [];
     cd_values = [];
 
-    % Set velocity and rps tolerances (adjust as needed)
+    % Set velocity and rps tolerances (adju st as needed)
     vel_tol = 2; % in m/s
     rps_tol = 2; % in m/s
 
