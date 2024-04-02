@@ -17,14 +17,6 @@ function BAL = blockage(BAL)
         %initialising epsilon wake array 
         eps_wake = zeros(1,length(V));
 
-        % Initialising zeros arrays
-        BAL.windOn.(BAL.config{i}).V_blocked = zeros(length(V));
-        BAL.windOn.(BAL.config{i}).q_blocked = zeros(length(V));
-        
-        BAL.windOn.(BAL.config{i}).CL_blocked = zeros(length(V));
-        BAL.windOn.(BAL.config{i}).CD_blocked = zeros(length(V));
-        BAL.windOn.(BAL.config{i}).CMpitch25c_blocked = zeros(length(V));
-        BAL.windOn.(BAL.config{i}).TC_blockd = zeros(length(V));
 
         %Maskells method 
         if config(1:6) == 'propon'
@@ -105,21 +97,24 @@ function BAL = blockage(BAL)
              end % if V = 20 / else v = 40 
          end % for i in V
 
-        eps_solid = solidblockage(V) * ones(1,length(V));
+        eps_solid = solidblockage() * ones(1,length(V));
         eps_reg = reshape(Regenblockage(TC), 1, []);
         if numel(eps_wake) ~= numel(eps_reg)
             disp('help')
         end
+        if numel(eps_solid) ~= numel(eps_reg)
+            disp('help2')
+        end
         epsilon = eps_solid + eps_wake + eps_reg;
 
-        BAL.windOn.(BAL.config{i}).V_blocked = V .* (1 + epsilon);
-        BAL.windOn.(BAL.config{i}).q_blocked = q .* (1 + epsilon).^2;
-        BAL.windOn.(BAL.config{i}).CL_blocked = CL .* (1 + epsilon).^-2;
-        BAL.windOn.(BAL.config{i}).CD_blocked = CD .* (1 + epsilon).^-2;
-        BAL.windOn.(BAL.config{i}).CM_blocked = CM .* (1 + epsilon).^-2;
-        BAL.windOn.(BAL.config{i}).CM25c_blocked = CM_25 .* (1 + epsilon).^-2;
+        BAL.windOn.(BAL.config{i}).V_blocked = reshape(V,1,[]) .* (1 + epsilon);
+        BAL.windOn.(BAL.config{i}).q_blocked = reshape(q,1,[]) .* (1 + epsilon).^2;
+        BAL.windOn.(BAL.config{i}).CL_blocked = reshape(CL,1,[]) .* (1 + epsilon).^-2;
+        BAL.windOn.(BAL.config{i}).CD_blocked = reshape(CD,1,[]) .* (1 + epsilon).^-2;
+        BAL.windOn.(BAL.config{i}).CM_blocked = reshape(CM,1,[]) .* (1 + epsilon).^-2;
+        BAL.windOn.(BAL.config{i}).CM25c_blocked = reshape(CM_25,1,[]) .* (1 + epsilon).^-2;
         if config(1:6) == 'propon'
-            BAL.windOn.(BAL.config{i}).TC_blockd = TC .* (1 + epsilon).^-2;
+            BAL.windOn.(BAL.config{i}).TC_blocked = reshape(TC,1,[]) .* (1 + epsilon).^-2;
         end
      end 
             

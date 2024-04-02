@@ -1,4 +1,4 @@
-function [epsilon] = solidblockage(Velocity)
+function [epsilon] = solidblockage()
 %SOLIDBLOCKAGE compute total epsilon for solid blockage of all parts
 % Input V [m/s] and output epsilon 
 
