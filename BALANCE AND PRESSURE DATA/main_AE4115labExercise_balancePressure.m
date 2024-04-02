@@ -11,8 +11,14 @@ clc
 % As we have files in multiple paths, paths shoukld be added here
 currentfolder = pwd;
 mainfolder =  fullfile(currentfolder, '..', 'scripts');
+%mainfolder = fullfile(currentfolder)
 path = genpath(mainfolder);
+subpath1 = genpath('WindtunnelCorrections');
+subpath2 = genpath('BALANCE AND PRESSURE DATA'); 
 addpath(mainfolder);
+addpath(subpath1);
+addpath(subpath2);
+
 
 
 %% Inputs
@@ -75,28 +81,50 @@ testSec   = 5;    % test-section number
 PRS = PRS_process(diskPath,fn_PRS,idxP);
 BAL = BAL_process(diskPath,fn_BAL,fn0,idxB,D,S,b,c,XmRefB,XmRefM,dAoA,dAoS,modelType,modelPos,testSec,PRS);
 
-%% Write your code here to apply the corrections and visualize the data
+%% ------------------   Write your code here to apply the corrections and visualize the data --------------------- %%
 % TODO dcm_da_tail() % compute dcm/da_tail 
-blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
+
+BAL = deleteDataPoint(BAL) % This function deletes a datapoint that was taken by accident at random conditions
+
+%% ---- Blockage ----- %%
+% Get Tc coefficient for prop on data %
+BAL = calculateDeltaCT(BAL,D,S);
+BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
-% Substract model off balance data
+%% ---- Substract model off balance data to account for dynamic pressure forces on balance struts---- %%
 
 modelOffData = readModelOffData('BALANCE AND PRESSURE DATA\DATA\modeloffdata.txt');
 %disp(modelOffData);
-correctedBAL = correctBALData(BAL, modelOffData) 
-BAL = correctedBAL
+correctedBAL = correctBALData(BAL, modelOffData); 
+BAL = correctedBAL;
 
-% Get Tc coefficient for prop on data 
 
-BAL = calculateDeltaCT(BAL,D,S)
 
-% BAL = calculateCLh(BAL)
-% plotelevatoreffec(BAL)
-% Result Plotting
-%plotTCvsRPS(BAL)
-%plotData(BAL)
 
+
+% Calculate tail data by substracting tail off data %
+BAL = calculateCLh(BAL);
+
+
+%% ---- Lift interference correction ---- %%
+[tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
+BAL = dcmdat(BAL);
+BAL = liftinterference(BAL, tail_off_20, tail_off_40);
+%% ---- Create Corrected and Uncorrected BAL Struct ---- %%
+
+Uncorrected_BAL = BAL
+blockage_and_lift_corrected_BAL = BAL
+% blockage_and_lift_corrected_BAL = structureData(BAL)
+%% ---- Calculate and plot aerodynamic performance at trimmed conditions ---- %
+
+[BAL,Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
+
+%% --------Result Plotting-------- %%
+plotelevatoreffec(BAL)
+% plotTCvsRPS(BAL)% plotData(BAL)
+% plotcontrolpower(BAL)
+% plotcmalpha(BAL)	
 
 
 

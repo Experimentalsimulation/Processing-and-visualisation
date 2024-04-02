@@ -11,8 +11,6 @@ function coefficients = get_abc_plot_Cl2_vs_Cd(cl_squared_values, cd_values)
         
     minimum = min(cl_squared_values);
     maximum = max(cl_squared_values);
-    disp(maximum)
-    disp(minimum)
     x_values = linspace(minimum, maximum, 100);
 
     % Calculate corresponding y values using the polynomial function

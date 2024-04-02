@@ -8,10 +8,10 @@ Balance:
 - De - Cl
 - De - Cd
 
-Find trimmed conditions for all RPS settings
+- Find trimmed conditions for all RPS settings
 
 - Cl-alpha in trimmed
--Cl - Cd in trimmed
+- Cl - Cd in trimmed
 
 
 Secondary goals:

@@ -9,8 +9,11 @@ function BAL = calculateCLh(BAL)
 
     % -------- Load data from file --------
     % Open the file
-    fileID = fopen('.\DATA\tailoffdata.txt', 'r');
+    fileID = fopen('tailoffdata.txt', 'r');
 
+    if fileID == -1
+    error('Cannot open file: FILEID -1.')
+    end
     % Read the first line containing column headers
     headers = fgetl(fileID);
     headerCells = strsplit(headers, '\t');
@@ -22,9 +25,7 @@ function BAL = calculateCLh(BAL)
     line = fgetl(fileID);
     lineCount = 1;
 
-    if fid == -1
-    error('Cannot open file.')
-    end
+    
     while ischar(line)
         % Split the line into cells
         cells = strsplit(line, '\t');
@@ -59,7 +60,7 @@ function BAL = calculateCLh(BAL)
     margin = 0.1;
 
     % Loop over the BAL data configurations
-    for i = 6:numel(BAL.config)
+    for i = 1:numel(BAL.config)
         % Extract data arrays from BAL for the current configuration
         CL = BAL.windOn.(BAL.config{i}).CL;
         CD = BAL.windOn.(BAL.config{i}).CD;
@@ -108,6 +109,7 @@ function BAL = calculateCLh(BAL)
         BAL.windOn.(BAL.config{i}).CLh = CLh;
         BAL.windOn.(BAL.config{i}).CDh = CDh;
         BAL.windOn.(BAL.config{i}).CM25ch = CM25ch;
+        
     end
 
 end
