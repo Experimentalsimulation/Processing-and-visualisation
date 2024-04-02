@@ -89,7 +89,7 @@ BAL = deleteDataPoint(BAL) % This function deletes a datapoint that was taken by
 %% ---- Blockage ----- %%
 % Get Tc coefficient for prop on data %
 BAL = calculateDeltaCT(BAL,D,S);
-% BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
+BAL = blockage(BAL); % applying blockage corrections Maskells method not fully  implemented
 % TODO interference() applying interference corrections 
 
 %% ---- Substract model off balance data to account for dynamic pressure forces on balance struts---- %%
@@ -109,17 +109,20 @@ BAL = calculateCLh(BAL);
 
 %% ---- Lift interference correction ---- %%
 [tail_off_20, tail_off_40] = tailoff('tailoffdata.txt');
-% BAL = dcmdat(BAL);
-% BAL = liftinterference(BAL, tail_off_20, tail_off_40);
+BAL = dcmdat(BAL);
+BAL = liftinterference(BAL, tail_off_20, tail_off_40);
+%% ---- Create Corrected and Uncorrected BAL Struct ---- %%
 
+Uncorrected_BAL = BAL
+blockage_and_lift_corrected_BAL = BAL
+% blockage_and_lift_corrected_BAL = structureData(BAL)
 %% ---- Calculate and plot aerodynamic performance at trimmed conditions ---- %
 
 [BAL,Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
 
 %% --------Result Plotting-------- %%
-
-% plotTCvsRPS(BAL)
-% plotData(BAL)
+plotelevatoreffec(BAL)
+% plotTCvsRPS(BAL)% plotData(BAL)
 % plotcontrolpower(BAL)
 % plotcmalpha(BAL)	
 
