@@ -8,7 +8,7 @@
     
     % Extract RPS settings from the BAL structure
     RPS_settings = unique(round(BAL.windOn.(BAL.config{7}).rpsM1));
-    RPS_settings(end+1) = 0
+    % RPS_settings(end+1) = 0
     % Extract all unique angles of attack across configurations
     % allAoA = [];
     % for i = 6:numel(BAL.config)
@@ -26,10 +26,10 @@
         % Specify elevator deflection values for each AoA
         if currentAoA == 0
             elevatorDeflections = [0, 10, 20, 25, -10];
-            confignames = {'propon_de0', 'propon_de10', 'propon_de20', 'propon_de25', 'propon_demin10','propoff_de0', 'propoff_de10', 'propoff_de20', 'propoff_de25', 'propoff_demin10'};
+            confignames = {'propon_de0', 'propon_de10', 'propon_de20', 'propon_de25', 'propon_demin10'} % ,'propoff_de0', 'propoff_de10', 'propoff_de20', 'propoff_de25', 'propoff_demin10'};
         else 
             elevatorDeflections = [0, 10, -10];
-            confignames = {'propon_de0', 'propon_de10', 'propon_demin10', 'propoff_de0', 'propoff_de10', 'propoff_demin10'};
+            confignames = {'propon_de0', 'propon_de10', 'propon_demin10'} %, 'propoff_de0', 'propoff_de10', 'propoff_demin10'};
         end
         % Loop over windspeeds
         for w = 1:numel(windspeeds)

@@ -119,13 +119,14 @@ blockage_and_lift_corrected_BAL = structureData(BAL)
 BAL = blockage_and_lift_corrected_BAL
 %% ---- Calculate and plot aerodynamic performance at trimmed conditions ---- %
 
-[BAL,Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
+% [BAL,Trimmed_conditions] = find_trimmed_conditionsv2(BAL)
 
 %% --------Result Plotting-------- %%
-PlotReynoldsCom(BAL)
+% plotRPScomp(BAL)
+% PlotReynoldsCom(BAL)
 % plotData(BAL)
 % plotelevatoreffec(BAL)
-% plotTCvsRPS(BAL)% plotData(BAL)
+plotTCvsRPS(BAL)% plotData(BAL)
 % plotcontrolpower(BAL)
 % plotcontrolpowerV2(BAL)
 % plotcmalpha(BAL)	

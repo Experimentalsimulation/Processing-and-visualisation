@@ -7,33 +7,33 @@ function coefficients = get_abc_plot_Cl2_vs_Cd(cl_squared_values, cd_values)
     degree = 2;
     coefficients = polyfit(cl_squared_values, cd_values, degree);
 
-    % Generate x values for the polynomial line
-        
-    minimum = min(cl_squared_values);
-    maximum = max(cl_squared_values);
-    x_values = linspace(minimum, maximum, 100);
-
-    % Calculate corresponding y values using the polynomial function
-    y_values = polyval(coefficients, x_values);
-
-    % Plot the scatter plot
-    scatter(cl_squared_values, cd_values, 'o', 'MarkerFaceColor', 'blue', 'MarkerEdgeColor', 'blue');
-    hold on;
-
-    % Plot the polynomial line of best fit
-    plot(x_values, y_values, 'red', 'LineWidth', 2);
-
-    % Set labels and title
-    xlabel('CL^2_unc');
-    ylabel('CD_unc');
-    title('CL^2_unc vs CD_unc');
-
-    % Add legend
-    legend('Data Points', 'Polynomial Fit');
-
-    % Show grid
-    grid on;
-
-    % Show plot
-    hold off;
+    % % Generate x values for the polynomial line
+    % 
+    % minimum = min(cl_squared_values);
+    % maximum = max(cl_squared_values);
+    % x_values = linspace(minimum, maximum, 100);
+    % 
+    % % Calculate corresponding y values using the polynomial function
+    % y_values = polyval(coefficients, x_values);
+    % 
+    % % Plot the scatter plot
+    % scatter(cl_squared_values, cd_values, 'o', 'MarkerFaceColor', 'blue', 'MarkerEdgeColor', 'blue');
+    % hold on;
+    % 
+    % % Plot the polynomial line of best fit
+    % plot(x_values, y_values, 'red', 'LineWidth', 2);
+    % 
+    % % Set labels and title
+    % xlabel('CL^2_unc');
+    % ylabel('CD_unc');
+    % title('CL^2_unc vs CD_unc');
+    % 
+    % % Add legend
+    % legend('Data Points', 'Polynomial Fit');
+    % 
+    % % Show grid
+    % grid on;
+    % 
+    % % Show plot
+    % hold off;
 end
