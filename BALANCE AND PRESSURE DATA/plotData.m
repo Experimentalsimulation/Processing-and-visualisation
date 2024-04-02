@@ -1,7 +1,7 @@
 function plotData(BAL)
     % Create figures for CL vs CD, CL vs AoA, and CM vs AoA
     figure;
-    
+    elevatordeflections = [0,10, 20, 25,-10, 0,10, 20, 25,-10]
     % Set a speed tolerance (adjust as needed)
     speed_tolerance = 2; % in m/s
     desired_AoA_sequence = [-5, 0, 5, 10];
@@ -14,6 +14,7 @@ function plotData(BAL)
         CD = BAL.windOn.(BAL.config{i}).CD;
         CM = BAL.windOn.(BAL.config{i}).CMpitch;
         V = BAL.windOn.(BAL.config{i}).V;
+        V_cor = BAL.windOn.(BAL.config{i}).V_blocked;
         AoA = round(AoA)
         
         CL_unc = BAL.windOn.(BAL.config{i}).CL_uncorrected;
@@ -22,10 +23,10 @@ function plotData(BAL)
     
         % Round speeds to the nearest integer
         rounded_speeds = round(V);
-    
+        rounded_correctedSpeeds =  round(V_cor);
         % Group speeds based on tolerance
         unique_speeds = unique(rounded_speeds);
-    
+        unique_correctedSpeeds = unique(rounded_correctedSpeeds);
         % Loop through each unique speed
         for j = 1:length(unique_speeds)
             % Extract data for the current speed
@@ -38,30 +39,32 @@ function plotData(BAL)
 
                 % Plot CL vs CD for the current speed
                 subplot(1, 3, 1);
-                plot(CL(idx_speed(order_idx)), CD(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s']);
+                plot(CL(idx_speed(order_idx)), CD(idx_speed(order_idx)), 'o-', 'DisplayName', ['de = ', num2str(elevatordeflections(i)), ', V = ', num2str(unique_correctedSpeeds(j)), ' m/s']);
                 hold on;
-                plot(CL_unc(idx_speed(order_idx)), CD_unc(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
+                plot(CL_unc(idx_speed(order_idx)), CD_unc(idx_speed(order_idx)), 'x-', 'DisplayName', ['de = ',num2str(elevatordeflections(i)), ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
 
                 % Plot CL vs AoA for the current speed
                 subplot(1, 3, 2);
-                plot(AoA(idx_speed(order_idx)), CL(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s']);
+                plot(AoA(idx_speed(order_idx)), CL(idx_speed(order_idx)), 'o-', 'DisplayName', ['de = ', num2str(elevatordeflections(i)), ', V = ', num2str(unique_correctedSpeeds(j)), ' m/s']);
                 hold on;
-                plot(AoA(idx_speed(order_idx)), CL_unc(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
+                plot(AoA(idx_speed(order_idx)), CL_unc(idx_speed(order_idx)), 'x-', 'DisplayName', ['de = ', num2str(elevatordeflections(i)), ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
 
                 % Plot CM vs AoA for the current speed
                 subplot(1, 3, 3);
-                plot(AoA(idx_speed(order_idx)), CM(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s']);
+                plot(AoA(idx_speed(order_idx)), CM(idx_speed(order_idx)), 'o-', 'DisplayName', ['de = ', num2str(elevatordeflections(i)), ', V = ', num2str(unique_correctedSpeeds(j)), ' m/s']);
                 hold on;
-                plot(AoA(idx_speed(order_idx)), CM_unc(idx_speed(order_idx)), 'o-', 'DisplayName', [BAL.config{i}, ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
+                plot(AoA(idx_speed(order_idx)), CM_unc(idx_speed(order_idx)), 'x-', 'DisplayName', ['de = ', num2str(elevatordeflections(i)), ', V = ', num2str(unique_speeds(j)), ' m/s (Uncorrected)']);
             end
         end
     end
     
+
+
     % Add labels and legends for CL vs CD
     subplot(1, 3, 1);
     xlabel('CL');
     ylabel('CD');
-    title('CL vs CD for Sequences with 4 Data Points (Ordered by Desired AoA Sequence)');
+    % title('CL vs CD for Sequences with 4 Data Points (Ordered by Desired AoA Sequence)');
     legend('Location', 'Best');
     grid on;
     
@@ -69,7 +72,7 @@ function plotData(BAL)
     subplot(1, 3, 2);
     xlabel('Angle of Attack (degrees)');
     ylabel('CL');
-    title('CL vs AoA for Sequences with 4 Data Points (Ordered by Desired AoA Sequence)');
+    % title('CL vs AoA for Sequences with 4 Data Points (Ordered by Desired AoA Sequence)');
     legend('Location', 'Best');
     grid on;
     
@@ -77,7 +80,7 @@ function plotData(BAL)
     subplot(1, 3, 3);
     xlabel('Angle of Attack (degrees)');
     ylabel('CM');
-    title('CM vs AoA for Sequences with 4 Data Points (Ordered by Desired AoA Sequence)');
+    % title('CM vs AoA for Sequences with 4 Data Points (Ordered by Desired AoA Sequence)');
     legend('Location', 'Best');
     grid on;
 
