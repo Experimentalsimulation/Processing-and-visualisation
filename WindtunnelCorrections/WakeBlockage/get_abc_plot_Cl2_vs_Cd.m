@@ -18,10 +18,10 @@ function coefficients = get_abc_plot_Cl2_vs_Cd(cl_squared_values, cd_values)
 
     % Plot the scatter plot
     scatter(cl_squared_values, cd_values, 'o', 'MarkerFaceColor', 'blue', 'MarkerEdgeColor', 'blue');
-    hold on;
+    %hold on;
 
     % Plot the polynomial line of best fit
-    plot(x_values, y_values, 'red', 'LineWidth', 2);
+    %plot(x_values, y_values, 'red', 'LineWidth', 2);
 
     % Set labels and title
     xlabel('CL^2_unc');

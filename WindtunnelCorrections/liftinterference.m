@@ -5,9 +5,9 @@ function BAL = liftinterference(BAL, tail_off_20, tail_off_40)
     %bv = votrexspanratio * b; % downstream votrex span [m]
     %be = (b + bv)/2; % [m] equivalent span
     
-    delta = 0.122; % Boundary correction factor off centernot taken into account
-    tau2_tail = 1.13; % Windtunnel shape factor acounts for tail lenght and average between 0 vertical offset and 0.1 be offset 
-    tau2 = 0.11; % same factor but at 0.5c 0.25 behind AC 
+    delta = 0.1; % Boundary correction factor off centernot taken into account
+    tau2_tail = 0.736; 
+    tau2 = 0.16; % same factor but at 0.75c 0.5 behind AC 
     S = 0.2172; % [m^2] Model reference area in this case wing area
     C = (1260 * 1800 - 2 * (300 * 300)) * 10^-6; % [m^2] windtunnel crossectional area
 
