@@ -8,7 +8,7 @@
     
     % Extract RPS settings from the BAL structure
     RPS_settings = unique(round(BAL.windOn.(BAL.config{7}).rpsM1));
-    
+    RPS_settings(end+1) = 0
     % Extract all unique angles of attack across configurations
     % allAoA = [];
     % for i = 6:numel(BAL.config)
@@ -26,10 +26,10 @@
         % Specify elevator deflection values for each AoA
         if currentAoA == 0
             elevatorDeflections = [0, 10, 20, 25, -10];
-            confignames = {'propon_de0', 'propon_de10', 'propon_de20', 'propon_de25', 'propon_demin10'};
+            confignames = {'propon_de0', 'propon_de10', 'propon_de20', 'propon_de25', 'propon_demin10','propoff_de0', 'propoff_de10', 'propoff_de20', 'propoff_de25', 'propoff_demin10'};
         else 
             elevatorDeflections = [0, 10, -10];
-            confignames = {'propon_de0', 'propon_de10', 'propon_demin10'};
+            confignames = {'propon_de0', 'propon_de10', 'propon_demin10', 'propoff_de0', 'propoff_de10', 'propoff_demin10'};
         end
         % Loop over windspeeds
         for w = 1:numel(windspeeds)
@@ -56,14 +56,18 @@
                     % Find indices where AoA matches the current loop, along with the current RPS and wind speed
                     idx = find(AoA == currentAoA & current_RPS == RPS_settings(r) & current_V == windspeeds(w));
                     
+                    if current_RPS == 0
+                        i = i - 1/2*numel(confignames);
+                    end
                     if ~isempty(idx)
                         % Assuming idx always returns a single value per i
                         CMpitch_values(i) = CMpitch(idx);
                         CL_values(i) = CL(idx);
+                        disp(CL(idx))
                         CD_values(i) = CD(idx);
                     end
                 end
-                
+                disp(CL_values)
                 % Field name includes wind speed, RPS setting, and AoA
                 fieldName = sprintf('V%dRPS%dAoA%d', windspeeds(w), RPS_settings(r), a);
                 
@@ -79,6 +83,7 @@
                 Trimmed_conditions.(fieldName).CM = CMpitch_sorted;
                 Trimmed_conditions.(fieldName).CL = CL_sorted;
                 Trimmed_conditions.(fieldName).CD = CD_sorted;
+                disp(Trimmed_conditions.(fieldName).CL)
                 % Calculate trimmed conditions
                 % Polynomial fit for CM to find the zero-crossing, which indicates trimmed condition for elevator deflection
                 p_CM = polyfit(sortedDeflections, CMpitch_sorted, 2);
@@ -96,6 +101,7 @@
                 else
                     Trimmed_conditions.(fieldName).CL_trim = NaN;
                     Trimmed_conditions.(fieldName).CD_trim = NaN;
+                    warning('No Cl and CD trim found')
                 end
                 Trimmed_conditions.(fieldName).CM_trim = 0;
                 Trimmed_conditions.(fieldName).CL_CD = Trimmed_conditions.(fieldName).CL_trim(2)/Trimmed_conditions.(fieldName).CD_trim(2)
@@ -150,7 +156,7 @@
 
      %% ------ Calculate max L/D ------ %%
 
-
+    
     % Initialize arrays to store maximal CL/CD ratios
     % Second Plot: Quadratic Fits and Maximal CL/CD Ratios with CD on y-axis
     figure;
